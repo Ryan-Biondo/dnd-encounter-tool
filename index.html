@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="cRatingSum.js"></script>
+    <script src="addEnemy.js"></script>
+    <script src="addPlayer.js"></script>
+    <title>DnD Experience Tracker</title>
+</head>
+
+<body>
+    <div id="enemyCRList">
+        <button id="addEnemyButton" onclick="addEnemy()">Add New Enemy</button>
+
+        <form action="get" id="challengeRatingList">
+            <div>
+                <label for="challengeRating1">CR of Enemy 1</label>
+                <br>
+                <input type="number" value="0" id="challengeRating1" name="challengeRating1">
+                <br>
+            </div>
+        </form>
+
+        <button id="cRatingButton" onclick="cRatingSum()">Calculate Sum of CR</button>
+        <br>
+        <div id="crSumValue"></div>
+        <br>
+    </div>
+
+    <div id="party">
+        <button id="addPlayerButton" onclick="addPlayer()">Add New Player</button>
+
+        <form action="get" id="partyLevel">
+            <label for="playerLevel">Level of Player 1</label>
+            <br>
+            <input type="number" value="1" id="playerLevel" name="playerLevel">
+            <br>
+        </form>
+
+        <button id="cRatingButton" onclick="cRatingSum()">Calculate!</button>
+        <br>
+        <div id="crSumValue"></div>
+        <br>
+    </div>
+    <div id="encounterRating">
+        <form action="get" id="encounterRatingForm">
+            <label for="challengeRatingSum">Total CR of Encounter:</label>
+            <br>
+            <input type="number" id="challengeRatingSum" name="challengeRatingSum" value="0">
+            <br>
+
+            <label for="numPlayers">Number of Players:</label>
+            <br>
+            <input type="number" id="numPlayers" name="numPlayers" value="1">
+            <br>
+
+            <label for="numEnemies">Number of Enemies:</label>
+            <br>
+            <input type="number" id="numEnemies" name="numEnemies" value="1">
+            <br>
+        </form>
+    </div>
+</body>
+<!-- how can we save data for later? database? -->
+
+</html>
