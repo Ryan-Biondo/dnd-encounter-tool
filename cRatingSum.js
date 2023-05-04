@@ -10,7 +10,8 @@ function cRatingSum() {
     total.value = ratingSum;
 
 };
-//cool addition loop! but we need to do more complex math with these values
-//use this loop for adding together monster CRs-
-//users can add more forms with a button - then adds all cr's
+
+//use this loop for adding together monster CRs
+// users can add more forms with a button - then adds all cr's
 // can add value directly to the CR total form
+// work on updating oninput event
