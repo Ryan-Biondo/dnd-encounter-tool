@@ -35,8 +35,6 @@ function removeEnemy() {
   form.removeChild(form.lastChild);
   console.log(form.length);
 
-
-  //remove button not disappearing when moving back to 1 form
   if (form.length == 1) {
     document.getElementById("removeEnemyButton").remove();
   }
