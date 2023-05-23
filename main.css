@@ -1,0 +1,42 @@
+body {
+    background-image: url("./assets/dragonbackground.jpg");
+    background-color: #08004e;
+    background-position: top center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    color: aliceblue;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.page-wrap,
+.heading {
+    display: flex;
+    justify-content: center;
+}
+.page-wrap {
+    display: flex;
+    justify-content: center;
+}
+.calculator {
+    display: flex;
+    justify-content: space-around;
+    width: 1200px;
+    background-color: rgba(21, 14, 83, 0.308);
+    border-radius: 25px;
+}
+.encounter-form-wrap {
+    background-color: rgb(111, 135, 172);
+    width: 700px;
+    padding: 20px;
+    margin: 100px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-around;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(228, 228, 228, 0.356);
+    width: 210px;
+    padding: 10px;
+    margin: 100px;
+    border-radius: 25px;
+}
