@@ -1,42 +1,62 @@
+/* Styling for the body */
 body {
-    background-image: url("./assets/dragonbackground.jpg");
-    background-color: #08004e;
-    background-position: top center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    color: aliceblue;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url("./assets/dragonbackground.jpg"); /* Background image */
+    background-color: #08004e; /* Background color */
+    background-position: top center; /* Center the background image */
+    background-repeat: no-repeat; /* Do not repeat the background image */
+    color: aliceblue; /* Text color */
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Font family */
 }
-.page-wrap,
-.heading {
-    display: flex;
-    justify-content: center;
-}
+
+/* Styling for the page-wrap and heading elements */
+
+.heading,
 .page-wrap {
-    display: flex;
-    justify-content: center;
+    display: flex; /* Display as a flex container */
+    justify-content: center; /* Center the content horizontally */
 }
+
+/* Styling for the calculator element */
 .calculator {
-    display: flex;
-    justify-content: space-around;
-    width: 1200px;
-    background-color: rgba(21, 14, 83, 0.308);
-    border-radius: 25px;
+    display: flex; /* Display as a flex container */
+    justify-content: space-around; /* Distribute the content evenly along the horizontal axis */
+    width: 1200px; /* Width of the calculator */
+    background-color: rgba(21, 14, 83, 0.308); /* Background color with transparency */
+    border-radius: 25px; /* Rounded corners */
 }
+
+/* Styling for the encounter form wrap  */
 .encounter-form-wrap {
-    background-color: rgb(111, 135, 172);
-    width: 700px;
-    padding: 20px;
-    margin: 100px;
-    border-radius: 25px;
-    display: flex;
-    justify-content: space-around;
+    background-color: rgb(111, 135, 172); /* Background color */
+    width: 700px; /* Width of the form wrap */
+    padding: 20px; /* Padding around the form */
+    margin: 100px; /* Margin around the form */
+    border-radius: 25px; /* Rounded corners */
+    display: flex; /* Display as a flex container */
+    justify-content: space-around; /* Distribute the content evenly along the horizontal axis */
 }
+
+/* Styling for the list displays  */
+.list-display {
+    padding-left: 20px; /* aligns list 20px left with padding */
+}
+/* Styling for the list items  */
+.list-item {
+    margin-bottom: 10px;
+}
+/* Styling for the encounter remove buttons  */
+.remove-button {
+    margin-left: 10px;
+    padding: 0px;
+}
+
+/* Styling for the footer */
 footer {
-    position: absolute;
-    bottom: 0;
-    background-color: rgba(228, 228, 228, 0.356);
-    width: 210px;
-    padding: 10px;
-    margin: 100px;
-    border-radius: 25px;
+    position: absolute; /* Positioned absolutely */
+    bottom: 0; /* Positioned at the bottom of the page */
+    background-color: rgba(228, 228, 228, 0.356); /* Background color with transparency */
+    width: 210px; /* Width of the footer */
+    padding: 10px; /* Padding around the footer */
+    margin: 100px; /* Margin around the footer */
+    border-radius: 25px; /* Rounded corners */
 }
