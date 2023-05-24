@@ -8,44 +8,56 @@
     <title>D&D 5e XP Calculator</title>
   </head>
   <body>
+    <!-- Heading section -->
     <div class="heading">
       <h1>Monster and Player XP Calculator</h1>
     </div>
+
+    <!-- Main content -->
     <div class="page-wrap">
       <div class="calculator">
+        <!-- Monsters section -->
         <div class="monsters-section">
           <h2>Monsters</h2>
           <div id="monsterInputs">
+            <!-- Monster inputs -->
             <select id="challengeRatingSelect" placeholder="Select CR"></select>
             <button id="addMonsterButton">Add Monster</button>
           </div>
-          <div id="monsterList"></div>
+          <ol class="list-display" id="monsterList"></ol>
           <p>Total Monsters: <span id="monsterCount">0</span></p>
           <p>Total CR: <span id="totalCR">0</span></p>
         </div>
+
+        <!-- Players section -->
         <div class="players-section">
           <h2>Players</h2>
           <div id="playerInputs">
+            <!-- Player inputs -->
             <input type="number" id="playerLevel" placeholder="Enter Player Level" />
             <button id="addPlayerButton">Add Player</button>
           </div>
-          <div id="playerList"></div>
+          <ol class="list-display" id="playerList"></ol>
           <p>Total Players: <span id="playerCount">0</span></p>
 
+          <!-- Calculated results section -->
           <h2>Calculated Results</h2>
           <p>Total XP: <span id="totalXP">0</span></p>
           <p>Adjusted XP: <span id="adjustedXP">0</span></p>
         </div>
       </div>
     </div>
+
+    <!-- Footer -->
     <footer>
+      <!-- Image credit -->
       <a
-        href="https://www.freepik.com/free-vector/red-dragon-rock-with-road-after-sunset_12900221.htm#query=fantasy%20adventure&position=1&from_view=keyword&track=ais"
-        >Image by upklyak</a
-      >
-      on Freepik
+        href="https://www.freepik.com/free-vector/red-dragon-rock-with-road-after-sunset_12900221.htm#query=fantasy%20adventure&position=1&from_view=keyword&track=ais">
+        Image by upklyak</a
+      >on Freepik
     </footer>
+
+    <!-- JavaScript file -->
     <script src="xpCalculator.js"></script>
   </body>
 </html>
-<!-- how can we save data for later? database? -->

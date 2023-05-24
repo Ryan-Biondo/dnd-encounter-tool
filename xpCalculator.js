@@ -1,62 +1,93 @@
 // Monster inputs
-const monsterCRSelect = document.getElementById('challengeRatingSelect');
-const addMonsterButton = document.getElementById('addMonsterButton');
-const monsterList = document.getElementById('monsterList');
-const monsterCountDisplay = document.getElementById('monsterCount');
-const totalCRDisplay = document.getElementById('totalCR');
+const monsterCRSelect = document.getElementById('challengeRatingSelect'); // Select dropdown for monster challenge rating
+const addMonsterButton = document.getElementById('addMonsterButton'); // Button to add a monster
+const monsterList = document.getElementById('monsterList'); // List to display monsters
+const monsterCountDisplay = document.getElementById('monsterCount'); // Display for monster count
+const totalCRDisplay = document.getElementById('totalCR'); // Display for total challenge rating
 
-let monsterCount = 0;
-let totalCR = 0;
+let monsters = []; // Array to store monsters
+let monsterCount = 0; // Counter for monster count
+let totalCR = 0; // Variable to calculate total challenge rating
 
 // Player inputs
-const playerLevelInput = document.getElementById('playerLevel');
-const addPlayerButton = document.getElementById('addPlayerButton');
-const playerList = document.getElementById('playerList');
-const playerCountDisplay = document.getElementById('playerCount');
+const playerLevelInput = document.getElementById('playerLevel'); // Input for player level
+const addPlayerButton = document.getElementById('addPlayerButton'); // Button to add a player
+const playerList = document.getElementById('playerList'); // List to display players
+const playerCountDisplay = document.getElementById('playerCount'); // Display for player count
 
-let playerCount = 0;
+let players = []; // Array to store players
+let playerCount = 0; // Counter for player count
 
 // Calculated results
-const totalXPDisplay = document.getElementById('totalXP');
-const adjustedXPDisplay = document.getElementById('adjustedXP');
+const totalXPDisplay = document.getElementById('totalXP'); // Display for total XP
+const adjustedXPDisplay = document.getElementById('adjustedXP'); // Display for adjusted XP
 
 addMonsterButton.addEventListener('click', () => {
-  const crValue = monsterCRSelect.value;
-  const selectedChallengeRating = challengeRatings.find((rating) => rating.challengeRating.toString() === crValue);
-  const xpValue = selectedChallengeRating.xp;
-  // Use xpValue for further processing or display
+  // Function to execute when the add monster button is clicked
+  const crValue = monsterCRSelect.value; // Selected challenge rating value from dropdown
+  const selectedChallengeRating = challengeRatings.find((rating) => rating.challengeRating.toString() === crValue); // Find the challenge rating object based on the selected value
+  const xpValue = selectedChallengeRating.xp; // XP value of the selected challenge rating
 
-  // Create a container div for the monster entry
-  const monsterContainer = document.createElement('div');
+  // Create monster object
+  const monster = {
+    id: ++monsterCount, // Increment and assign a unique ID for the monster
+    cr: parseFloat(crValue), // Challenge rating of the monster
+    xp: xpValue, // XP value of the monster
+  };
 
-  // Create the text content for the monster entry
-  const monsterText = document.createElement('span');
+  // Add monster to array
+  monsters.push(monster);
 
-  let crText;
-  if (crValue % 1 === 0) {
-    crText = `CR ${crValue}`;
-  } else if (crValue === '0.125') {
-    crText = 'CR 1/8';
-  } else if (crValue === '0.25') {
-    crText = 'CR 1/4';
-  } else if (crValue === '0.5') {
-    crText = 'CR 1/2';
-  } else {
-    crText = `CR ${crValue}`;
+  // Update total CR
+  totalCR += monster.cr;
+  totalCRDisplay.textContent = totalCR; // Update the display for total challenge rating
+
+  // Update displays
+  monsterCountDisplay.textContent = monsterCount; // Update the display for monster count
+  calculateTotalXP(); // Recalculate total XP and adjusted XP
+  updateMonsterList(); // Update the displayed monster list
+});
+
+// Event listener for adding a player
+addPlayerButton.addEventListener('click', () => {
+  // Function to execute when the add player button is clicked
+  const playerLevel = playerLevelInput.value; // Entered player level
+
+  // Validate the entered player level
+  if (playerLevel === '') {
+    alert('Please enter a valid player level');
+    return;
   }
 
-  monsterText.textContent = `Monster ${++monsterCount} | ${crText} | XP: ${xpValue}  `;
+  if (!Number.isInteger(Number(playerLevel)) || Number(playerLevel) > 20 || Number(playerLevel) < 1) {
+    alert('Please enter a valid player level (integer from 1 to 20)');
+    return;
+  }
 
-  // Create the remove button for the monster entry
-  const removeButton = document.createElement('button');
-  removeButton.textContent = 'Remove';
-  removeButton.addEventListener('click', () => {
-    // Remove the monster entry
-    monsterContainer.remove();
+  // Create player object
+  const player = {
+    id: ++playerCount, // Increment and assign a unique ID for the player
+    level: parseInt(playerLevel), // Player level
+  };
 
-    // Update total CR and displays
-    totalCR -= parseFloat(crValue);
-    totalCRDisplay.textContent = totalCR;
+  // Add player to array
+  players.push(player);
+
+  // Update display
+  playerCountDisplay.textContent = playerCount; // Update the display for player count
+  calculateTotalXP(); // Recalculate total XP and adjusted XP
+  updatePlayerList(); // Update the displayed player list
+});
+
+function removeMonster(id) {
+  // Function to remove a monster based on its ID
+  const monsterIndex = monsters.findIndex((monster) => monster.id === id); // Find the index of the monster with the specified ID
+  if (monsterIndex !== -1) {
+    const removedMonster = monsters.splice(monsterIndex, 1)[0]; // Remove the monster from the array
+
+    // Update total CR
+    totalCR -= removedMonster.cr;
+    totalCRDisplay.textContent = totalCR; // Update the display for total challenge rating
 
     // Decrement the monster count
     monsterCount--;
@@ -65,123 +96,95 @@ addMonsterButton.addEventListener('click', () => {
 
     // Recalculate the total XP
     calculateTotalXP();
-  });
-
-  // Append the text content and remove button to the container div
-  monsterContainer.appendChild(monsterText);
-  monsterContainer.appendChild(removeButton);
-
-  // Add the monster entry to the list
-  monsterList.appendChild(monsterContainer);
-
-  // Update total CR
-  totalCR += parseFloat(crValue);
-  totalCRDisplay.textContent = totalCR;
-
-  // Update displays
-  monsterCountDisplay.textContent = monsterCount;
-  calculateTotalXP();
-});
-
-// Event listener for adding a player
-addPlayerButton.addEventListener('click', () => {
-  const playerLevel = playerLevelInput.value;
-
-  // Validate the entered player level
-  if (playerLevel === '') {
-    alert('Please enter a valid player level');
-    return;
+    updateMonsterList(); // Update the displayed monster list
   }
+}
 
-  if (!Number.isInteger(Number(playerLevel)) || Number(playerLevel) > 20) {
-    alert('Please enter a valid player level (integer from 1 to 20)');
-    return;
-  }
+function removePlayer(id) {
+  // Function to remove a player based on its ID
+  const playerIndex = players.findIndex((player) => player.id === id); // Find the index of the player with the specified ID
+  if (playerIndex !== -1) {
+    players.splice(playerIndex, 1); // Remove the player from the array
 
-  // Create a container div for the player entry
-  const playerContainer = document.createElement('div');
-
-  // Create the text content for the player entry
-  const playerText = document.createElement('span');
-  playerText.textContent = `Player ${++playerCount} | Level: ${playerLevel}  `;
-
-  // Create the remove button for the player entry
-  const removeButton = document.createElement('button');
-  removeButton.textContent = 'Remove';
-  removeButton.addEventListener('click', () => {
-    // Remove the player entry
-    playerContainer.remove();
-    // Decrement the monster count
+    // Decrement the player count
     playerCount--;
-    // Update player count display
+    // Update the player count display
     playerCountDisplay.textContent = playerCount;
 
     // Recalculate the total XP
     calculateTotalXP();
-  });
-
-  // Append the text content and remove button to the container div
-  playerContainer.appendChild(playerText);
-  playerContainer.appendChild(removeButton);
-
-  // Add the player entry to the list
-  playerList.appendChild(playerContainer);
-
-  // Update display
-  playerCountDisplay.textContent = playerCount;
-  calculateTotalXP();
-});
+    updatePlayerList(); // Update the displayed player list
+  }
+}
 
 function calculateTotalXP() {
-  // Sum up the XP values of all generated monsters
+  // Function to calculate the total XP and adjusted XP
   let totalXP = 0;
-  const monsterEntries = monsterList.querySelectorAll('div');
-  monsterEntries.forEach((entry) => {
-    const xpValueText = entry.querySelector('span').textContent.split(' | ')[2];
-    const xpValue = parseInt(xpValueText.split(': ')[1]);
-    totalXP += xpValue;
-  });
-  // Calculate the XP per player
-  let xpPerPlayer;
-  if (playerCount !== 0) {
-    xpPerPlayer = (totalXP / playerCount).toFixed(0);
-  } else {
-    xpPerPlayer = '0'; // Display "N/A" when playerCount is 0
+
+  // Calculate total XP for monsters
+  for (const monster of monsters) {
+    totalXP += monster.xp;
   }
-  // Update the total XP display
-  totalXPDisplay.textContent = `${totalXP} XP (${xpPerPlayer} XP per player)`;
-  calculateAdjustedXP(totalXP);
+
+  // Calculate adjusted XP based on total XP and Monster Count
+  const adjustedXP = totalXP * monsterCountMultiplier[monsterCount];
+  xpPerPlayer = playerCount === 0 ? 0 : totalXP / playerCount;
+  const adjustedXpPerPlayer = adjustedXP / playerCount;
+
+  // Update the display
+  totalXPDisplay.textContent = `${totalXP} (Per Player: ${Math.round(xpPerPlayer)})`; // Update the display for total XP
+  adjustedXPDisplay.textContent = `${adjustedXP} (Per Player: ${Math.round(adjustedXpPerPlayer)})`; // Update the display for adjusted XP
 }
 
-function calculateAdjustedXP(totalXP) {
-  let multiplier = 1;
-
-  if (monsterCount === 1) {
-    multiplier = 1;
-  } else if (monsterCount === 2) {
-    multiplier = 1.5;
-  } else if (monsterCount >= 3 && monsterCount <= 6) {
-    multiplier = 2;
-  } else if (monsterCount >= 7 && monsterCount <= 10) {
-    multiplier = 2.5;
-  } else if (monsterCount >= 11 && monsterCount <= 14) {
-    multiplier = 3;
-  } else if (monsterCount >= 15) {
-    multiplier = 4;
+function updateMonsterList() {
+  // Function to update the displayed monster list
+  while (monsterList.firstChild) {
+    monsterList.firstChild.remove(); // Clear the existing list items (otherwise adds everything in the list again)
   }
 
-  let adjustedXP = totalXP * multiplier;
-  if (playerCount !== 0) {
-    adjustedXpPerPlayer = (adjustedXP / playerCount).toFixed(0);
-  } else {
-    adjustedXpPerPlayer = '0'; // Display "N/A" when playerCount is 0
-  }
+  for (const monster of monsters) {
+    // Iterate over array of monsters
+    const listItem = document.createElement('li'); // Create a new list item
+    listItem.classList.add('list-item'); // Add a class to the list item
+    listItem.textContent = `Monster CR: ${monster.cr}, XP: ${monster.xp}`; // Set the text content of the list item
 
-  // Update the total XP display
-  adjustedXPDisplay.textContent = `${adjustedXP} XP (${adjustedXpPerPlayer} XP per player)`;
-  //   calculateAdjustedXP();
+    const removeButton = document.createElement('button'); // Create a remove button
+    removeButton.classList.add('remove-button'); // Add a class to the remove button
+    removeButton.textContent = 'Remove'; // Set the text content of the remove button
+    removeButton.addEventListener('click', () => {
+      removeMonster(monster.id); // Add event listener to remove the monster when the remove button is clicked
+    });
+
+    listItem.appendChild(removeButton); // Append the remove button to the list item
+    monsterList.appendChild(listItem); // Append the list item to the monster list
+  }
 }
 
+function updatePlayerList() {
+  // Function to update the displayed player list
+  while (playerList.firstChild) {
+    playerList.firstChild.remove(); // Clear the existing list items (otherwise adds everything in the list again)
+  }
+
+  for (const player of players) {
+    // Iterate over array of players
+    const listItem = document.createElement('li'); // Create a new list item
+    listItem.classList.add('list-item'); // Add a class to the list item
+    listItem.textContent = `Player Level: ${player.level}`; // Set the text content of the list item
+
+    const removeButton = document.createElement('button'); // Create a remove button
+    removeButton.classList.add('remove-button'); // Add a class to the remove button
+    removeButton.textContent = 'Remove'; // Set the text content of the remove button
+    removeButton.addEventListener('click', () => {
+      removePlayer(player.id); // Add event listener to remove the player when the remove button is clicked
+    });
+
+    listItem.appendChild(removeButton); // Append the remove button to the list item
+    playerList.appendChild(listItem); // Append the list item to the player list
+  }
+}
+
+// An array of challenge ratings with their corresponding XP values
 const challengeRatings = [
   { challengeRating: 0, xp: 10 },
   { challengeRating: 1 / 8, xp: 25 },
@@ -214,26 +217,44 @@ const challengeRatings = [
   { challengeRating: 30, xp: 155000 },
 ];
 
-function createChallengeRatingOptions() {
-  const selectElement = document.getElementById('challengeRatingSelect');
+// Monster count multiplier based on the number of monsters
+const monsterCountMultiplier = {
+  1: 1,
+  2: 1.5,
+  3: 2,
+  4: 2,
+  5: 2,
+  6: 2,
+  7: 2.5,
+  8: 2.5,
+  9: 2.5,
+  10: 2.5,
+  11: 3,
+  12: 3,
+  13: 3,
+  14: 3,
+  '15+': 4, // Monster count of 15 or higher should have a multiplier of 4.
+};
 
-  challengeRatings.forEach((entry) => {
-    const option = document.createElement('option');
-    option.value = entry.challengeRating;
+// Create options for each challenge rating and append them to the dropdown list
+for (const rating of challengeRatings) {
+  const option = document.createElement('option');
+  option.value = rating.challengeRating.toString(); // Set the value of the option
 
-    if (entry.challengeRating % 1 === 0) {
-      option.textContent = `CR ${entry.challengeRating} (XP: ${entry.xp})`;
-    } else if (entry.challengeRating === 1 / 8) {
-      option.textContent = `CR 1/8 (XP: ${entry.xp})`;
-    } else if (entry.challengeRating === 1 / 4) {
-      option.textContent = `CR 1/4 (XP: ${entry.xp})`;
-    } else if (entry.challengeRating === 1 / 2) {
-      option.textContent = `CR 1/2 (XP: ${entry.xp})`;
-    }
+  let crText;
+  // Convert fraction numbers to display as strings]
+  if (rating.challengeRating % 1 === 0) {
+    crText = `CR ${rating.challengeRating}`;
+  } else if (rating.challengeRating === 1 / 8) {
+    crText = 'CR 1/8';
+  } else if (rating.challengeRating === 1 / 4) {
+    crText = 'CR 1/4';
+  } else if (rating.challengeRating === 1 / 2) {
+    crText = 'CR 1/2';
+  } else {
+    crText = `CR ${rating.challengeRating}`;
+  }
 
-    selectElement.appendChild(option);
-  });
+  option.textContent = `${crText} | XP: ${rating.xp}`; // Set the text content of the option
+  monsterCRSelect.appendChild(option); // Append the option to the dropdown list
 }
-
-// Call the function to create the options
-createChallengeRatingOptions();
