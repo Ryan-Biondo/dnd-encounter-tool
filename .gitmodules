@@ -1,0 +1,3 @@
+[submodule "dndtracker"]
+	path = dndtracker
+	url = https://github.com/Ryan-Biondo/dnd-encounter-tool
